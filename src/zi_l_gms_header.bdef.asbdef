@@ -1,0 +1,167 @@
+managed implementation in class zbp_i_l_gms_header unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_L_GMS_HEADER alias GMSHeader
+persistent table  ztb_l_gms_header
+lock master
+total etag Magms
+draft table ztb_gms_head_dr
+early numbering
+authorization master ( instance )
+etag master Magms
+
+{
+  create (authorization : global);
+  update;
+  delete;
+  field (readonly) Magms;
+  association _GMSData { create; with draft; }
+  association _GMSUser { create; with draft; }
+  association _GMSPdf { create; with draft; }
+  association _GMSTline { create; with draft; }
+  // Draft actions
+  draft action Activate optimized;
+  draft action Edit;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+  action uploadExcelData;
+  side effects
+  {
+    action uploadExcelData affects $self, messages;
+  }
+
+  mapping for ztb_l_gms_header
+    {
+      Hscg    = hscg;
+      Htms    = htms;
+      Magms   = magms;
+      Note    = note;
+      Ptms    = ptms;
+    }
+
+}
+
+define behavior for ZI_GMS_DATA alias GMSData
+implementation in class zbp_i_gms_data unique
+persistent table ztb_gms_exc_data
+draft table ztb_dgms_xl_data
+lock dependent by _GMSHeader
+authorization dependent by _GMSHeader
+early numbering
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) Magms, LineId, FileId, EndUser, LineNumber;
+//  field (numbering : managed) LineId, FileId;
+//  field (readonly : update) LineNumber, EndUser;
+  association _GMSHeader { with draft; }
+  mapping for ztb_gms_exc_data
+  {
+    LineId = line_id;
+    LineNumber = line_no;
+    Currency = currency;
+    EndUser = end_user;
+    FileId = file_id;
+    Magms = magms;
+    Price = price;
+    ProductGroup = product_group;
+    ProductName = product_name;
+    Quantity = quantity;
+    TotalPrice = total_price;
+    Unit = unit;
+  }
+}
+
+define behavior for ZI_GMS_USER alias GMSUser
+implementation in class zbp_i_GMS_USER unique
+persistent table ztb_gms_exc_user
+draft table ztb_dgms_xl_user
+lock dependent by _GMSHeader
+early numbering
+authorization dependent by _GMSHeader
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) Magms, FileId, EndUser;
+//  field (numbering : managed) FileId;
+  association _GMSHeader { with draft; }
+  action uploadExcelData result [1] $self;
+
+  determination Limit on modify  { create; }
+  side effects
+  {
+    field Attachment affects entity _GMSHeader;
+  }
+  determination UpdateData on modify { field Attachment; }
+  determination DeleteData on modify { delete; }
+  mapping for ztb_gms_exc_user
+  {
+    Attachment = attachment;
+    Magms = magms;
+    Mimetype = mimetype;
+    EndUser = end_user;
+    FileId = file_id;
+    Filename = filename;
+    LastChangedAt = last_changed_at;
+    LocalCreatedAt = local_created_at;
+    LocalCreatedBy = local_created_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LocalLastChangedBy = local_last_changed_by;
+  }
+}
+
+define behavior for ZI_L_GMS_PDF alias GMSPdf
+implementation in class zbp_i_l_GMS_PDF unique
+persistent table ztb_gms_pdf
+draft table ztb_gms_pdf_dr
+lock dependent by _GMSHeader
+early numbering
+authorization dependent by _GMSHeader
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) Magms, FileId, EndUser;
+//  field (numbering : managed) FileId;
+  association _GMSHeader { with draft; }
+  mapping for ztb_gms_pdf
+  {
+    Attachment  = attachment;
+    Magms = magms;
+    Mimetype = mimetype;
+    EndUser = end_user;
+    FileId = file_id;
+    Filename = filename;
+    LastChangedAt = last_changed_at;
+    LocalCreatedAt = local_created_at;
+    LocalCreatedBy = local_created_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LocalLastChangedBy = local_last_changed_by;
+  }
+}
+
+define behavior for ZI_L_GMS_TLINE alias GMSTline
+implementation in class zbp_i_l_RAP_TLINE unique
+persistent table ztb_rap_tline
+draft table ztb_rap_tline_dr
+lock dependent by _GMSHeader
+authorization dependent by _GMSHeader
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) Magms;
+  association _GMSHeader{ with draft; }
+  mapping for ztb_rap_tline
+  {
+    Begda = begda;
+    Endda = endda;
+    Magms = magms;
+    Manhomcv = manhomcv;
+    Tennhomcv = tennhomcv;
+  }
+}

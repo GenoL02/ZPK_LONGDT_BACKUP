@@ -1,0 +1,56 @@
+@Metadata.layer: #CORE
+@UI.headerInfo:{
+    typeName: 'File Data',
+    typeNamePlural: 'File Data',
+    title: 
+    { 
+        type: #STANDARD,
+        value: 'FileId'
+    }
+    ,
+    description:
+    { 
+        type: #STANDARD,
+        value: 'FileId'
+    } 
+}
+annotate entity ZC_GMS_DATA
+    with 
+{   
+    @UI.facet: [{ id: 'idGMSData', purpose: #STANDARD, position: 5,
+      label: 'Detail Data', type: #IDENTIFICATION_REFERENCE }]
+    @UI.lineItem: [{ position: 5, label: 'Line ID' }]
+    LineId;
+    @EndUserText.label: 'Line Number'
+    @UI.lineItem: [{ position: 6, label: 'Line Number' }]
+    LineNumber;
+    @UI.lineItem: [{ position: 10, label: 'User' }]
+    @UI.identification: [{ position: 10, label: 'User' }]
+    EndUser;
+    @UI.lineItem: [{ position: 20, label: 'File ID' }]
+    FileId;
+    @UI.identification: [{ position: 20, label: 'Mã gói mua sắm'  }]
+    @UI.lineItem: [{ position: 30, label: 'Mã gói mua sắm' }]
+    Magms;
+    @UI.identification: [{ position: 40, label: 'Tên sản phẩm'  }]
+    @UI.lineItem: [{ position: 40, label: 'Tên sản phẩm' }]
+    ProductName;
+    @UI.identification: [{ position: 50, label: 'Nhóm sản phẩm'  }]
+    @UI.lineItem: [{ position: 50, label: 'Nhóm sản phẩm' }]
+    ProductGroup;
+    @UI.identification: [{ position: 60, label: 'Số lượng'  }]
+    @UI.lineItem: [{ position: 60, label: 'Số lượng' }]
+    Quantity;
+    @UI.identification: [{ position: 70, label: 'đơn vị'  }]
+    @UI.lineItem: [{ position: 70, label: 'đơn vị' }]
+    Unit;
+    @UI.identification: [{ position: 80, label: 'Đơn giá' }]
+    @UI.lineItem: [{ position: 80, label: 'Đơn giá' }]
+    Price;
+    @UI.identification: [{ position: 90, label: 'Tổng giá'  }]
+    @UI.lineItem: [{ position: 90, label: 'Tổng giá' }]
+    TotalPrice;
+    @UI.identification: [{ position: 100, label: 'Đơn vị tiền'  }]
+    @UI.lineItem: [{ position: 100, label: 'Đơn vị tiền' }]
+    Currency;
+}

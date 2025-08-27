@@ -1,0 +1,35 @@
+{
+  "formatVersion": "2",
+  "header": {
+    "description": "",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD",
+    "targetMappingTitle": "Procurement Package Management Application"
+  },
+  "ui5AppDetails": {
+    "appId": "mstt.newgms"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_817AAE7172B35808FED386BC507662BAF62BF5A8_TM",
+    "semanticObject": "mstt",
+    "action": "manage",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_817AAE7172B35808FED386BC507662BAF62BF5A8_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Procurement Package Management Application",
+        "subtitle": "Procurement Package Management Application"
+      }
+    }
+  ]
+}

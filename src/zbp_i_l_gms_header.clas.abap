@@ -1,0 +1,19 @@
+CLASS zbp_i_l_gms_header DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_l_gms_header.
+PUBLIC SECTION.
+    TYPES: BEGIN OF GTY_PR_XL,
+             PRODUCT_NAME  TYPE STRING,
+             PRODUCT_GROUP TYPE STRING,
+             QUANTITY      TYPE STRING,
+             UNIT          TYPE STRING,
+             PRICE         TYPE STRING,
+             TOTAL_PRICE   TYPE STRING,
+             CURRENCY      TYPE STRING,
+             LINE_NUMBER     TYPE STRING,
+             LINE_ID         TYPE STRING,
+           END OF GTY_PR_XL.
+ENDCLASS.
+
+
+
+CLASS ZBP_I_L_GMS_HEADER IMPLEMENTATION.
+ENDCLASS.

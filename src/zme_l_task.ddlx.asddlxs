@@ -1,0 +1,48 @@
+@Metadata.layer: #CORE
+annotate entity ZC_L_TASK
+    with 
+    
+{
+    @UI.facet: [
+//    {
+//        id: 'Task',
+//        purpose: #STANDARD,
+//        type: #IDENTIFICATION_REFERENCE,
+//        label: 'Task',
+//        position: 10 
+//    },
+    { 
+        id: 'Records',
+        purpose: #STANDARD,
+        type: #LINEITEM_REFERENCE,
+        label: 'Records',
+        targetElement: '_Subject',
+        position: 20
+    }
+    ]
+    @UI: {
+//    lineItem: [{ label: 'Step', position: 10 }],
+        identification: [{ label: 'Step', position: 10 }]
+  }
+    Step;
+    @UI: {
+//    lineItem: [{ label: 'Substep', position: 20, importance: #LOW }],
+        identification: [{ label: 'Substep', position: 20 }]
+  }
+    SubStep;
+    @UI: {
+//    lineItem: [{ label: 'Ref Step', position: 30, importance: #LOW }],
+        identification: [{ label: 'Ref Step', position: 30 }]
+  }
+    RefStep;
+    @UI: {lineItem: [{ label: 'Step Description', position: 40, importance: #HIGH }],
+        identification: [{ label: 'Step Description', position: 40 }]
+  }
+    StepDescr;
+    @UI: {lineItem: [{ label: 'Substep Description', position: 50, importance: #HIGH }],
+        identification: [{ label: 'Substep Description', position: 50 }]
+  }
+    SubstepDescr;
+ 
+    
+}

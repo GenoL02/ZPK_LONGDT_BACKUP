@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition for Task'
+define service ZSD_L_TASK {
+  expose ZC_L_TASK    as Task;
+  expose ZC_L_SUBJECT as Subject;
+}

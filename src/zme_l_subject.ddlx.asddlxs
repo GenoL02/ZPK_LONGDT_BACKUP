@@ -1,0 +1,57 @@
+@Metadata.layer: #CORE
+annotate entity ZC_L_SUBJECT
+    with 
+{
+    @UI.facet: [
+//    {
+//        id: 'subject',
+//        purpose: #STANDARD,
+//        type: #LINEITEM_REFERENCE,
+//        label: 'Subjects',
+//        position: 10 
+//    },
+    {
+        id: 'Detail',
+        purpose: #STANDARD,
+        type: #IDENTIFICATION_REFERENCE,
+        label: 'Detail',
+        position: 20 
+    }
+    ]
+    @UI: {
+        identification: [{ label: 'Step', position: 10 }], selectionField: [{  position: 10 }]
+  }
+    Step;
+    @UI: {lineItem: [{ label: 'Line Number', position: 15 }],
+        identification: [{ label: 'Line Number', position: 15 }]
+  }
+    line_number;
+    @UI: {lineItem: [{ label: 'Subject', position: 20, type: #WITH_URL }],
+        identification: [{ label: 'Subject', position: 20 }], selectionField: [{  position: 20 }]
+  }
+    Subject;
+    @UI: {lineItem: [{ label: 'From', position: 30 }],
+        identification: [{ label: 'From', position: 30 }], selectionField: [{  position: 30 }]
+  }
+    DateFrom;
+    @UI: {lineItem: [{ label: 'Sent On', position: 40 }],
+        identification: [{ label: 'Sent On', position: 40 }], selectionField: [{  position: 40 }]
+  }
+    SentOn;
+    @UI: {lineItem: [{ label: 'Priority', position: 50 }],
+        identification: [{ label: 'Priority', position: 50 }], selectionField: [{  position: 50 }]
+  }
+    Priority;
+    @UI: {lineItem: [{ label: 'Due Date', position: 60 }],
+        identification: [{ label: 'Due Date', position: 60 }], selectionField: [{  position: 60 }]
+  }
+    DueDate;
+    @UI: {lineItem: [{ label: 'Status', position: 70 }],
+        identification: [{ label: 'Status', position: 70 }], selectionField: [{  position: 70 }]
+  }
+    Status;
+    @UI: {lineItem: [{ label: 'Forward By', position: 80 }],
+        identification: [{ label: 'Forward By', position: 80 }], selectionField: [{  position: 80 }]
+  }
+    ForwardBy; 
+}

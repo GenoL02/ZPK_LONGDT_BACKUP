@@ -1,0 +1,40 @@
+@Metadata.layer: #CORE
+@UI.headerInfo:{
+    typeName: 'Time line',
+    typeNamePlural: 'Time line'
+//    title: 
+//    { 
+//        type: #STANDARD,
+//        value: 'FileId'
+//    }
+//    ,
+//    description:
+//    { 
+//        type: #STANDARD,
+//        value: 'FileId'
+//    } 
+}
+annotate entity ZC_L_GMS_TLINE
+    with 
+{
+    @UI.facet: [{ id:              'Tline',
+                 purpose:         #STANDARD,
+                 type:            #IDENTIFICATION_REFERENCE,
+                 label:           'Time line',
+                 position:        5 }]
+    @UI.identification: [{ position: 10 }]
+    @UI.lineItem: [{ position: 10, label: 'Mã gói mua sắm' }]
+    Magms;
+    @UI.identification: [{ position: 20 }]
+    @UI.lineItem: [{ position: 20, label: 'Mã nhóm công việc' }]
+    Manhomcv;
+    @UI.identification: [{ position: 30 }]
+    @UI.lineItem: [{ position: 30, label: 'Tên nhóm công việc' }]
+    Tennhomcv;
+    @UI.identification: [{ position: 40 }]
+    @UI.lineItem: [{ position: 40, label: 'Ngày bắt đầu' }]
+    Begda;
+    @UI.identification: [{ position: 50 }]
+    @UI.lineItem: [{ position: 50, label: 'Ngày kết thúc' }]
+    Endda;
+}

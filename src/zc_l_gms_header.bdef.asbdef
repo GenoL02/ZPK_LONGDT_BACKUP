@@ -1,0 +1,57 @@
+projection;
+strict ( 2 );
+use draft;
+use side effects;
+
+define behavior for ZC_L_GMS_HEADER //alias <alias_name>
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Activate;
+  use action Edit;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use action uploadExcelData;
+
+  use association _GMSData { create; with draft; }
+  use association _GMSUser { create; with draft; }
+  use association _GMSPdf { create; with draft; }
+  use association _GMSTline { create; with draft; }
+}
+
+define behavior for ZC_GMS_DATA //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _GMSHeader { with draft; }
+}
+
+define behavior for ZC_GMS_USER alias GMSUser
+{
+  use update;
+  use delete;
+  use action uploadExcelData;
+
+  use association _GMSHeader { with draft; }
+}
+
+define behavior for ZC_L_GMS_PDF alias GMSPdf
+{
+  use update;
+  use delete;
+
+  use association _GMSHeader { with draft; }
+}
+
+define behavior for ZC_L_GMS_TLINE //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _GMSHeader { with draft; }
+}

@@ -1,0 +1,8 @@
+@EndUserText.label: 'Service Definition for GMS'
+define service ZSD_L_GMS {
+  expose ZC_L_GMS_HEADER as GMSHeader;
+  expose ZC_L_GMS_TLINE  as Tline;
+  expose ZC_GMS_USER     as User;
+  expose ZC_GMS_DATA     as Data;
+  expose ZC_L_GMS_PDF    as Pdf;
+}

@@ -1,0 +1,114 @@
+CLASS lhc_GMSUser DEFINITION INHERITING FROM cl_abap_behavior_handler.
+  PRIVATE SECTION.
+
+    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
+      IMPORTING keys REQUEST requested_authorizations FOR GMSUser RESULT result.
+
+    METHODS uploadExcelData FOR MODIFY
+      IMPORTING keys FOR ACTION GMSUser~uploadExcelData RESULT result.
+
+    METHODS DeleteData FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR GMSUser~DeleteData.
+
+    METHODS Limit FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR GMSUser~Limit.
+
+    METHODS UpdateData FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR GMSUser~UpdateData.
+
+ENDCLASS.
+
+CLASS lhc_GMSUser IMPLEMENTATION.
+
+  METHOD get_instance_authorizations.
+    LOOP AT keys ASSIGNING FIELD-SYMBOL(<ls_data>).
+      APPEND VALUE #( %key = <ls_data>-%key ) TO result.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD uploadExcelData.
+  ENDMETHOD.
+
+  METHOD DELETEDATA.
+    READ ENTITIES OF ZI_L_GMS_HEADER IN LOCAL MODE
+           ENTITY GMSHEADER BY \_GMSDATA
+           ALL FIELDS WITH CORRESPONDING #( KEYS )
+           RESULT DATA(LT_EXISTING_XLDATA).
+
+    IF LT_EXISTING_XLDATA IS NOT INITIAL.
+      MODIFY ENTITIES OF ZI_L_GMS_HEADER IN LOCAL MODE
+        ENTITY GMSDATA DELETE FROM VALUE #(
+          FOR LWA_DATA IN LT_EXISTING_XLDATA (
+          %KEY      = LWA_DATA-%KEY
+          %IS_DRAFT = LWA_DATA-%IS_DRAFT ) ).
+    ENDIF.
+
+    READ ENTITIES OF ZI_L_GMS_HEADER IN LOCAL MODE
+  ENTITY GMSHEADER ALL FIELDS WITH CORRESPONDING #( KEYS )
+  RESULT DATA(LT_XLHEAD).
+
+    "Update File Status
+    LOOP AT LT_XLHEAD INTO DATA(LS_XLHEAD).
+      MODIFY ENTITIES OF ZI_L_GMS_HEADER IN LOCAL MODE
+        ENTITY GMSHEADER
+        UPDATE FIELDS ( NOTE )
+        WITH VALUE #( (
+                      %TKY                = LS_XLHEAD-%TKY
+                      %DATA-NOTE    = LS_XLHEAD-NOTE
+                      %CONTROL-NOTE = IF_ABAP_BEHV=>MK-ON
+        ) ).
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD LIMIT.
+    LOOP AT KEYS ASSIGNING FIELD-SYMBOL(<FS_ENTITY>).
+
+      SELECT COUNT(*) FROM ZTB_DGMS_XL_USER
+        WHERE MAGMS = @<FS_ENTITY>-MAGMS
+        AND DRAFTENTITYOPERATIONCODE <> 'L'
+        AND DRAFTENTITYOPERATIONCODE <> 'D'
+        INTO @DATA(LV_COUNT2).
+
+      IF LV_COUNT2 > 0.
+        APPEND VALUE #( %MSG = NEW_MESSAGE(
+                        SEVERITY = IF_ABAP_BEHV_MESSAGE=>SEVERITY-ERROR
+                        ID       = 'ZMSG_GMS'
+                        NUMBER   = 001
+                        V1       = |Chỉ được phép tạo 1 bản ghi upload cho mỗi gói mua|
+                        V2       = | sắm.| ) ) TO REPORTED-GMSUSER.
+        "Delete XLData Existing (if any)
+        READ ENTITIES OF ZI_L_GMS_HEADER IN LOCAL MODE
+          ENTITY GMSHEADER BY \_GMSUSER
+          ALL FIELDS WITH CORRESPONDING #( KEYS )
+          RESULT DATA(LT_EXISTING_XLDATA).
+
+        IF LT_EXISTING_XLDATA IS NOT INITIAL.
+          MODIFY ENTITIES OF ZI_L_GMS_HEADER IN LOCAL MODE
+            ENTITY GMSUSER DELETE FROM VALUE #(
+            ( %KEY      = LT_EXISTING_XLDATA[ 1 ]-%KEY
+              %IS_DRAFT = LT_EXISTING_XLDATA[ 1 ]-%IS_DRAFT ) ).
+        ENDIF.
+        CONTINUE.
+      ENDIF.
+
+    ENDLOOP.
+  ENDMETHOD.
+
+
+  METHOD UPDATEDATA.
+    "Delete XLData Existing (if any)
+    READ ENTITIES OF ZI_L_GMS_HEADER IN LOCAL MODE
+      ENTITY GMSHEADER BY \_GMSDATA
+      ALL FIELDS WITH CORRESPONDING #( KEYS )
+      RESULT DATA(LT_EXISTING_XLDATA).
+
+    IF LT_EXISTING_XLDATA IS NOT INITIAL.
+      MODIFY ENTITIES OF ZI_L_GMS_HEADER IN LOCAL MODE
+        ENTITY GMSDATA DELETE FROM VALUE #(
+          FOR LWA_DATA IN LT_EXISTING_XLDATA (
+          %KEY      = LWA_DATA-%KEY
+          %IS_DRAFT = LWA_DATA-%IS_DRAFT ) ) MAPPED DATA(LT_MAPPED).
+    ENDIF.
+  ENDMETHOD.
+
+ENDCLASS.

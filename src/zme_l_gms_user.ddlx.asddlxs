@@ -1,0 +1,49 @@
+@Metadata.layer: #CORE
+@UI.headerInfo:{
+    typeName: 'Upload Excel',
+    typeNamePlural: 'Upload Excel'
+//    title: 
+//    { 
+//        type: #STANDARD,
+//        value: 'FileId'
+//    }
+////    ,
+////    description:
+////    { 
+////        type: #STANDARD,
+////        value: 'FileId'
+////    } 
+}
+annotate entity ZC_GMS_USER
+    with 
+{
+    @UI.facet: [{ id: 'idGMSUer', purpose: #STANDARD, position: 5,
+      label: 'Upload Excel', type: #IDENTIFICATION_REFERENCE }]
+    @UI.identification: [{ position: 10 }]
+    @UI.lineItem: [{ position: 10, label: 'User' }]
+    EndUser;
+    @UI.lineItem: [{ position: 20, label: 'File ID' }]
+    FileId;
+    @UI.lineItem: [{ position: 30, label: 'Mã gói mua sắm' }]
+    Magms;
+    @UI.identification: [{ position: 40 }]
+    @UI.lineItem: [{ position: 40, label: 'File' }, 
+    { type: #FOR_ACTION, label: 'Upload Data', dataAction: 'uploadExcelData', hidden: true }]
+    //  @UI.identification: [{ type: #FOR_ACTION, label: 'Upload Data', dataAction: 'uploadExcelData' }]
+    Attachment;
+    @UI.hidden: true
+    Mimetype;
+    @UI.lineItem: [{ position: 50, label: 'Filename' }]
+    Filename;
+    @UI.hidden: true
+    LocalCreatedBy;
+    @UI.hidden: true
+    LocalCreatedAt;
+    @UI.hidden: true
+    LocalLastChangedBy;
+    @UI.hidden: true
+    LocalLastChangedAt;
+    @UI.hidden: true
+    LastChangedAt;
+    
+}

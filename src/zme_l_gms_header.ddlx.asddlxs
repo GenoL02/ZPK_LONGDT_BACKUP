@@ -1,0 +1,49 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+  typeName: 'GMS Header',
+  typeNamePlural: 'GMS Headers'
+//  title: { type: #STANDARD, value: 'EndUser' },
+//  description: { type: #STANDARD, value: 'FileId' }
+}
+annotate entity ZC_L_GMS_HEADER
+    with 
+{
+  @UI.facet: [
+    
+    { id: 'idGMSHeader', purpose: #STANDARD, position: 10,
+      label: 'Gói mua sắm', type: #IDENTIFICATION_REFERENCE },
+    
+
+    { id: 'idGMSTline', purpose: #STANDARD, position: 20,
+      label: 'Time Line', type: #LINEITEM_REFERENCE, targetElement: '_GMSTline' },
+
+    { id: 'idUser', purpose: #STANDARD, position: 40,
+      label: 'Upload Excel', type: #LINEITEM_REFERENCE, targetElement: '_GMSUser' },
+      
+    { id: 'idPdf', purpose: #STANDARD, position: 30,
+      label: 'Upload PDF', type: #LINEITEM_REFERENCE,
+      targetElement: '_GMSPdf' },
+    { id: 'idData', purpose: #STANDARD, position: 50,
+      label: 'Items Detail', type: #LINEITEM_REFERENCE,
+      targetElement: '_GMSData' }
+  ]
+  
+    @UI.lineItem: [{ position: 10, label: 'Mã gói mua sắm' }]
+
+  @UI.identification: [{ position: 10, label: 'Mã gói mua sắm' }, 
+  { type: #FOR_ACTION, label: 'Upload Data', dataAction: 'uploadExcelData' }]
+    Magms;
+    @UI.lineItem: [{ position: 20, label: 'Hình thức mua sắm' }]
+  @UI.identification: [{ position: 20, label: 'Hình thức mua sắm' }]
+    Htms;
+    @UI.lineItem: [{ position: 30, label: 'Hồ sơ chào giá' }]
+  @UI.identification: [{ position: 30, label: 'Hồ sơ chào giá' }]
+    Hscg;
+    @UI.lineItem: [{ position: 40, label: 'Phương thức mua sắm' }]
+  @UI.identification: [{ position: 40, label: 'Phương thức mua sắm' }]
+    Ptms;
+    @UI.lineItem: [{ position: 50, label: 'Ghi chú' }]
+  @UI.identification: [{ position: 50, label: 'Ghi chú' }]
+    Note;
+    
+}

@@ -1,0 +1,41 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+  typeName: 'Upload PDF',
+  typeNamePlural: 'Upload PDF',
+  title: { type: #STANDARD, value: 'EndUser' },
+  description: { type: #STANDARD, value: 'FileId' }
+}
+annotate entity ZC_L_GMS_PDF
+    with 
+{
+@UI.facet: [
+//    { id: 'idEndUser', purpose: #HEADER, position: 10,
+//      type: #DATAPOINT_REFERENCE, targetQualifier: 'tqEndUser' },
+//    { id: 'idChgAt', purpose: #HEADER, position: 20,
+//      type: #DATAPOINT_REFERENCE, targetQualifier: 'tqChgAt' },
+//    { id: 'idStatus', purpose: #HEADER, position: 30,
+//      type: #DATAPOINT_REFERENCE, targetQualifier: 'tqStatus' },
+
+    { id: 'idGMSPdf', purpose: #STANDARD, position: 5,
+      label: 'Upload PDF', type: #IDENTIFICATION_REFERENCE }
+  ]
+   @UI.lineItem: [{ position: 10, label: 'Mã gói mua sắm' }]
+   Magms;
+    @UI.lineItem: [{ position: 20, label: 'User' }]
+//  @UI.dataPoint: { qualifier: 'tqEndUser', title: 'Person Responsible' }
+//  @UI.identification: [{ type: #FOR_ACTION, label: 'Upload Data', dataAction: 'uploadExcelData' }]
+  @UI.identification: [{ position: 20, label: 'User' }]
+    EndUser;
+//    FileId;
+@UI.lineItem: [{ position: 30, label: 'File' }]
+@UI.identification: [{ position: 30, label: 'Select Excel File to Upload' }]
+    Attachment;
+//    Mimetype;
+//    Filename;
+//    LocalCreatedBy;
+//    LocalCreatedAt;
+//    LocalLastChangedBy;
+//    LocalLastChangedAt;
+//    LastChangedAt;
+    
+}

@@ -1,0 +1,59 @@
+managed implementation in class zbp_i_l_task unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_L_TASK alias Task
+persistent table ztb_l_step
+lock master
+total etag Step
+draft table ztb_l_step_dr
+early numbering
+authorization master ( instance )
+etag master Step
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly ) Step;
+  association _Subject { create; with draft;}
+  // Draft actions
+  draft action Activate optimized;
+  draft action Edit;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+  mapping for ztb_l_step
+  {
+    Step = step;
+    RefStep = ref_step;
+    StepDescr = step_descr;
+    SubStep = sub_step;
+    SubstepDescr = substep_descr;
+  }
+}
+
+define behavior for ZI_L_SUBJECT alias Subject
+persistent table ztb_l_subject
+draft table ztb_l_subject_dr
+lock dependent by _Task
+authorization dependent by _Task
+early numbering
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) Step, line_number;
+  association _Task { with draft; }
+  mapping for ztb_l_subject
+  {
+    Step = step;
+    line_number = line_number;
+    DateFrom = date_from;
+    DueDate = due_date;
+    Priority = priority;
+    SentOn = sent_on;
+    Status = status;
+    Subject = subject;
+    ForwardBy = forward_by;
+  }
+}
